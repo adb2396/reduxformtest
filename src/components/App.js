@@ -2,22 +2,14 @@ import React from 'react';
 
 import ToDoForm from './ToDoForm';
 import ToDoList from './ToDoList';
+import NavBar from './NavBar';
 
 class App extends React.Component {
 
     render() {
         return (
-            <div className="ui equal width center aligned padded grid">
-                <div className="row">
-                    <div className="column">
-                        <ToDoForm />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="column">
-                        <ToDoList />
-                    </div>
-                </div>
+            <div>
+                <NavBar />
             </div>
         );
     };

@@ -1,29 +1,56 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import {
+    Modal,
+    ModalHeader,
+    ModalBody,
+    Form,
+    FormGroup,
+    Label,
+    Input,
+    Button
+} from 'reactstrap';
 
 const ToDoForm = (props) => {
 
-    const { handleSubmit } = props;
-
     return (
-        <div className="fourteen wide column" style={{ marginLeft: "2%", backgroundColor: "rgba(63,155,191, 0.5)" }}>
-            <form className="ui form" onSubmit={handleSubmit}> 
-                <div className="two fields">
-                    <div className="field">
-                        <label htmlFor="taskTitle">Task title</label>
-                        <Field name="taskTitle" component="input" type="text" />
-                    </div>
-                    <div className="field">
-                        <label htmlFor="taskDescription">Task description</label>
-                        <Field name="taskDescription" component="input" type="text" />
-                    </div>
-                    <button className="ui button secondary" type="submit">Add task</button>
-                </div>
-            </form>
+        <div>
+            <Modal isOpen={props.isModalOpen} toggle={props.toggle}>
+                <ModalHeader toggle={props.toggle}>Task details</ModalHeader>
+                <ModalBody>
+                    <Form>
+                        <FormGroup style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Label for="title">Task Title: </Label>
+                            <Input 
+                                type="text" 
+                                name="title" 
+                                id="title" 
+                                style={{ width: '300px' }}
+                            />
+                        </FormGroup>
+                        <FormGroup style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Label for="description">Task Description: </Label>
+                            <Input 
+                                type="text" 
+                                name="description" 
+                                id="description" 
+                                style={{ width: '300px' }} 
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <Button 
+                                outline 
+                                color="secondary" 
+                                className="float-right" 
+                                type="submit"
+                            >
+                                Add
+                            </Button>
+                        </FormGroup>
+                    </Form>
+                </ModalBody>
+            </Modal>
         </div>
     );
 };
 
-const createReduxForm = reduxForm({ form: 'ToDoForm' });
-
-export default createReduxForm(ToDoForm);
+export default ToDoForm;
