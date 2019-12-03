@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { addTask } from '../actions';
+import uuid from 'uuid';
 import {
     Modal,
     ModalHeader,
@@ -10,12 +13,41 @@ import {
     Button
 } from 'reactstrap';
 
-const ToDoForm = (props) => {
+class ToDoForm extends React.Component {
 
-    return (
-        <div>
-            <Modal isOpen={props.isModalOpen} toggle={props.toggle}>
-                <ModalHeader toggle={props.toggle}>Task details</ModalHeader>
+    state = { taskDetails: { title: '', description: '' } };
+
+    handleInputChange = (e) => {
+        const { name, value } = e.target;
+        this.setState(prevState => {
+            const newObj = { ...prevState.taskDetails };
+            newObj[name] = value;
+            return {
+                taskDetails: newObj
+            }
+        });
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(this.state);
+        this.props.addTask( { id: uuid(), ...this.state.taskDetails } );
+
+        this.props.toggle();
+    }
+
+    modalToggle = () => {
+        this.setState(prevState => {
+            return {
+                modalOpen: !prevState.modalOpen
+            }
+        });
+    }
+
+    renderModal() {
+        return (
+            <Modal isOpen={this.props.isModalOpen} toggle={this.props.toggle}>
+                <ModalHeader toggle={this.props.toggle}>Task details</ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -25,6 +57,7 @@ const ToDoForm = (props) => {
                                 name="title" 
                                 id="title" 
                                 style={{ width: '300px' }}
+                                onChange={this.handleInputChange}
                             />
                         </FormGroup>
                         <FormGroup style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -34,6 +67,7 @@ const ToDoForm = (props) => {
                                 name="description" 
                                 id="description" 
                                 style={{ width: '300px' }} 
+                                onChange={this.handleInputChange}
                             />
                         </FormGroup>
                         <FormGroup>
@@ -42,6 +76,7 @@ const ToDoForm = (props) => {
                                 color="secondary" 
                                 className="float-right" 
                                 type="submit"
+                                onClick={this.handleSubmit}
                             >
                                 Add
                             </Button>
@@ -49,8 +84,19 @@ const ToDoForm = (props) => {
                     </Form>
                 </ModalBody>
             </Modal>
-        </div>
-    );
+        );
+    };
+
+    render() {
+        return (
+            <div>
+                { this.renderModal() }
+            </div>
+        );
+    };
 };
 
-export default ToDoForm;
+export default connect(
+    null, 
+    { addTask }
+)(ToDoForm);
