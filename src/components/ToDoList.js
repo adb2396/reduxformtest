@@ -16,6 +16,7 @@ class ToDoList extends React.Component {
             return (
                 <ToDoItem 
                     key={id}
+                    id={id}
                     title={title}
                     description={description}
                 />

@@ -10,22 +10,18 @@ import {
     NavLink,
     Button
 } from 'reactstrap';
-import ToDoForm from './ToDoForm';
 
-const NavBar = () => {
+const NavBar = (props) => {
     const [ isOpen, setIsOpen ] = useState(false);
-    const [ isModal, setIsModal ] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
 
-    const toggleModal = () => setIsModal(!isModal);
-
     return (
         <div>
-            <Navbar color="dark" dark expand="md"> 
+            <Navbar color="dark" dark expand="md" className="mb-3"> 
                 <Container>
                     <NavbarBrand href="/" >Todo List</NavbarBrand>
-                    <Button onClick={toggleModal}>Add Task</Button>
+                    <Button onClick={props.toggleModal}>Add Task</Button>
                     <NavbarToggler onClick={toggle} />
                     <Collapse isOpen={isOpen} navbar >
                         <Nav className="ml-auto" navbar>
@@ -36,10 +32,6 @@ const NavBar = () => {
                     </Collapse>
                 </Container>
             </Navbar>
-            <ToDoForm 
-                isModalOpen={isModal}
-                toggle={toggleModal}
-            />
         </div>
     );
 }

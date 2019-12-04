@@ -30,7 +30,7 @@ class ToDoForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        //console.log(this.state);
         this.props.addTask( { id: uuid(), ...this.state.taskDetails } );
 
         this.props.toggle();
