@@ -18,10 +18,10 @@ export const addTask = (task) => {
     }
 }
 
-export const editTask = (id, task) => {
+export const editTask = (task) => {
     return {
         type: EDIT_TASK,
-        payload: { id, task }
+        payload: task
     }
 }
 
